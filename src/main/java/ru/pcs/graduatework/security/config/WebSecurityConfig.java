@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -52,28 +51,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // будет хранится информация о входе в базе данных
 //                    .and()
                 .authorizeRequests()
-                    .antMatchers("/signUp").permitAll()   // страница /signUp доступна всем
-                    .antMatchers("/portfolio").authenticated()   // страница portfolio доступна только аутонтефицированным пользователям
-                    .antMatchers("/portfolio/**").authenticated()   // страница portfolio доступна только аутонтефицированным пользователям
-                    .antMatchers("/accounts/**").hasAuthority("ADMIN")  // к страницам вида /accounts/** могут получить
+                .antMatchers("/signUp").permitAll()   // страница /signUp доступна всем
+                .antMatchers("/portfolio").authenticated()   // страница portfolio доступна только аутонтефицированным пользователям
+                .antMatchers("/portfolio/**").authenticated()   // страница portfolio доступна только аутонтефицированным пользователям
+                .antMatchers("/accounts/**").hasAuthority("ADMIN")  // к страницам вида /accounts/** могут получить
                 // доступ только администраторы
-                    .and()
+                .and()
                 // используем and() для того, чтобы сделать свою форму логина
                 .formLogin()
-                    .loginPage("/signIn")
+                .loginPage("/signIn")
 //                    .loginProcessingUrl("/portfolio")
-                    .defaultSuccessUrl("/portfolio", true)
-                    .failureUrl("/signIn?error")
-                    .usernameParameter("login") /* со страницы signIn.ftlh в качестве логина уходит параметр
+                .defaultSuccessUrl("/portfolio", true)
+                .failureUrl("/signIn?error")
+                .usernameParameter("login") /* со страницы signIn.ftlh в качестве логина уходит параметр
                 name="login". Если в качестве username мы хотим использовать email, то нужно указать spring'у,
                 чтобы он воспринимал параметр name="email" как username - для этого и используется .usernameParametr*/
-                    .passwordParameter("password") /* аналогично как с usernameParametr нужно указать какой параметр
+                .passwordParameter("password") /* аналогично как с usernameParametr нужно указать какой параметр
                 на странице signIn.ftlh Spring должен воспринимать как password */
-                    .permitAll()
-                    .and()
+                .permitAll()
+                .and()
                 .logout()
-                    .logoutUrl("/portfolio_logout")
-                    .logoutSuccessUrl("/welcome.html");
+                .logoutUrl("/portfolio_logout")
+                .logoutSuccessUrl("/welcome.html");
     }
 
     @Bean

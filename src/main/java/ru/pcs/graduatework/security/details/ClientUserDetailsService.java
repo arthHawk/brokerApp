@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.pcs.graduatework.model.Client;
+import ru.pcs.graduatework.entities.ClientEntity;
 import ru.pcs.graduatework.repositories.ClientsRepository;
 
 import java.util.Optional;
@@ -19,9 +19,9 @@ public class ClientUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
 //        /* Вместо этих четырех строк будем записывать все в одну строку
-        Optional<Client> clientOptional = clientsRepository.findByLogin(login);
-        Client client = clientOptional.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        ClientUserDetails clientUserDetails = new ClientUserDetails(client);
+        Optional<ClientEntity> clientOptional = clientsRepository.findByLogin(login);
+        ClientEntity clientEntity = clientOptional.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        ClientUserDetails clientUserDetails = new ClientUserDetails(clientEntity);
         return clientUserDetails;
 //        */
 

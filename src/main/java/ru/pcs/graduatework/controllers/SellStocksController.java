@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Client;
-import ru.pcs.graduatework.model.Portfolio;
-import ru.pcs.graduatework.model.Stock;
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.dto.ClientPortfolioDto;
+import ru.pcs.graduatework.dto.StockDto;
+import ru.pcs.graduatework.entities.PortfolioEntity;
 import ru.pcs.graduatework.service.ClientsService;
 import ru.pcs.graduatework.service.PortfolioService;
 import ru.pcs.graduatework.service.StocksService;
@@ -29,13 +29,13 @@ public class SellStocksController {
                                       @PathVariable("client-id") Integer clientId,
                                       @PathVariable("pf-ticker") String ticker) {
         Integer portfolioId = portfolioService.searchPortfolioIdByClientIdAndTicker(clientId, ticker);
-        List<Stock> stocks = stocksService.findAllByTicker(ticker);
-        Stock stock = stocks.get(0);
-        Portfolio portfolio = portfolioService.getByID(portfolioId);
-        Client client = clientsService.getClient(clientId);
-        model.addAttribute("client", client);
-        model.addAttribute("portfolio", portfolio);
-        model.addAttribute("stock", stock);
+        List<StockDto> stockDtoList = stocksService.findAllByTicker(ticker);
+        StockDto stockDto = stockDtoList.get(0);
+        PortfolioEntity portfolioEntity = portfolioService.getByID(portfolioId);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        model.addAttribute("client", clientDto);
+        model.addAttribute("portfolio", portfolioEntity);
+        model.addAttribute("stock", stockDto);
         return "personal-sell-stocks-count";
     }
 
@@ -45,18 +45,18 @@ public class SellStocksController {
                             @PathVariable("portfolio-id") Integer portfolioId,
                             @RequestParam("stocksCount") Integer stocksCount,
                             @RequestParam("stock-id") Integer stockId) {
-        Client client = clientsService.getClient(clientId);
-        Portfolio portfolio = portfolioService.getByID(portfolioId);
-        Stock stock = stocksService.getById(stockId);
-        if (portfolioService.subtractStocks(client, stock, portfolio, stocksCount)) {
-            List<PortfolioForm> portfolios = stocksService.getPortfolioInformation(client.getId());
-            model.addAttribute("client", client);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        PortfolioEntity portfolioEntity = portfolioService.getByID(portfolioId);
+        StockDto stockDto = stocksService.getById(stockId);
+        if (portfolioService.subtractStocks(clientDto, stockDto, portfolioEntity, stocksCount)) {
+            List<ClientPortfolioDto> portfolios = stocksService.getPortfolioInformation(clientDto.getId());
+            model.addAttribute("client", clientDto);
             model.addAttribute("portfolio", portfolios);
             return "personal-portfolioPage";
         } else {
-            model.addAttribute("client", client);
-            model.addAttribute("portfolio", portfolio);
-            model.addAttribute("stock", stock);
+            model.addAttribute("client", clientDto);
+            model.addAttribute("portfolio", portfolioEntity);
+            model.addAttribute("stock", stockDto);
             return "personal-sell-stocks-count-incorrect-stocksCount";
         }
     }

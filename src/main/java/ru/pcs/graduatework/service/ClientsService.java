@@ -1,24 +1,32 @@
 package ru.pcs.graduatework.service;
 
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.entities.ClientEntity;
+import ru.pcs.graduatework.entities.PortfolioEntity;
 import ru.pcs.graduatework.forms.ClientForm;
-import ru.pcs.graduatework.model.Client;
-import ru.pcs.graduatework.model.Portfolio;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface ClientsService {
-    List<Client> getAllClients();
-    Client searchClientByLogin(String login);
-    Boolean authorization(Client client, ClientForm form);
-    void addClient(ClientForm form);
-    void deleteClient(Integer clientId);
-    Client getClient(Integer clientId);
+    List<ClientDto> getAllClients();
 
-    List<Portfolio> getPortfoliosByUser(Integer clientId);
-    List<Portfolio> getPortfoliosWithoutOwner();
+    ClientDto searchClientByLogin(String login);
+
+    Boolean authorization(ClientEntity clientEntity, ClientForm form);
+
+    void addClient(ClientForm form);
+
+    void deleteClient(Integer clientId);
+
+    ClientDto getClient(Integer clientId);
+
+    List<PortfolioEntity> getPortfoliosByUser(Integer clientId);
+
+    List<PortfolioEntity> getPortfoliosWithoutOwner();
 
     void addCash(Integer clientId, BigDecimal addingValue);
+
     void withdrawalCash(Integer clientId, BigDecimal withdrawalValue);
 
     void editClient(Integer clientId, ClientForm form);

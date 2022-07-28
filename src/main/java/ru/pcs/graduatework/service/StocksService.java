@@ -1,20 +1,19 @@
 package ru.pcs.graduatework.service;
 
-import org.springframework.data.jpa.repository.Query;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Stock;
+import ru.pcs.graduatework.dto.ClientPortfolioDto;
+import ru.pcs.graduatework.dto.StockDto;
 
 import java.util.List;
 
 public interface StocksService {
-//    public List<PortfolioForm> getPortfolioInformation(Integer clientId);
-    List<Stock> getAllStocks();
+    //    public List<PortfolioForm> getPortfolioInformation(Integer clientId);
+    List<StockDto> getAllStocks();
 
-    Stock getStock(Integer stockId);
+    StockDto getStock(Integer stockId);
 
-    List<PortfolioForm> getPortfolioInformation(Integer id);
+    List<ClientPortfolioDto> getPortfolioInformation(Integer id);
 
-    List<Stock> findAllByTicker(String ticker);
+    List<StockDto> findAllByTicker(String ticker);
 
-    Stock getById(Integer stockId);
+    StockDto getById(Integer stockId);
 }

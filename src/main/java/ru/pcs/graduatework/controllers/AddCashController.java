@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Client;
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.dto.ClientPortfolioDto;
 import ru.pcs.graduatework.service.ClientsService;
 import ru.pcs.graduatework.service.StocksService;
 
@@ -22,8 +22,8 @@ public class AddCashController {
 
     @GetMapping
     public String addCashToClientPage(Model model, @PathVariable("client-id") Integer clientId) {
-        Client client = clientsService.getClient(clientId);
-        model.addAttribute("client", client);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        model.addAttribute("client", clientDto);
         return "personal-addCash";
     }
 
@@ -31,9 +31,9 @@ public class AddCashController {
     public String addCashToClient(Model model, @PathVariable("client-id") Integer clientId,
                                   @RequestParam("addValue") BigDecimal addValue) {
         clientsService.addCash(clientId, addValue);
-        Client client = clientsService.getClient(clientId);
-        List<PortfolioForm> portfolio = stocksService.getPortfolioInformation(client.getId());
-        model.addAttribute("client", client);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        List<ClientPortfolioDto> portfolio = stocksService.getPortfolioInformation(clientDto.getId());
+        model.addAttribute("client", clientDto);
         model.addAttribute("portfolio", portfolio);
         if (portfolio.size() > 0) {
             return "personal-portfolioPage";

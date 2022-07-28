@@ -1,22 +1,24 @@
-package ru.pcs.graduatework.model;
+package ru.pcs.graduatework.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import ru.pcs.graduatework.enums.Role;
+import ru.pcs.graduatework.enums.State;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Entity
 @Table(name = "clients")
-public class Client {
+public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,17 +29,7 @@ public class Client {
     @Column(columnDefinition = "default 0")
     private BigDecimal cash;
 
-    // роль пользователя
-    public enum Role {
-        USER, ADMIN
-    }
-
-    // состояние пользователя - подтвержден, не подтвержден
-    public enum State {
-        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
-    }
-
-    // если сделать EnumType.ORDINAL, то будет хранится порядковый номер числа
+    // если сделать EnumType.ORDINAL, то будет храниться порядковый номер числа
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -45,8 +37,8 @@ public class Client {
     private State state;
 
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    @OneToMany(mappedBy = "client")
-    private List<Portfolio> portfolios;
+    @OneToMany(mappedBy = "clientEntity")
+    private List<PortfolioEntity> portfolioEntities;
 
 
 }

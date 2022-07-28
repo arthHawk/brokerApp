@@ -1,19 +1,10 @@
 package ru.pcs.graduatework.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import ru.pcs.graduatework.forms.ClientForm;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Client;
 import ru.pcs.graduatework.service.ClientsService;
 import ru.pcs.graduatework.service.StocksService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
