@@ -11,7 +11,7 @@
     <h3>Имя - ${client.name} </h3>
     <h3>Фамилия - ${client.surname} </h3>
     <br>
-    <form action="/adminClients/${client.id}/adminUpdate">
+    <form action="/admin-clients/${client.id}/admin-update">
         <label>
             Имя: <input name="name" placeholder="${client.name}">
         </label>

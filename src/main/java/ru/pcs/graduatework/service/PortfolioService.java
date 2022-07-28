@@ -1,16 +1,15 @@
 package ru.pcs.graduatework.service;
 
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
-import ru.pcs.graduatework.model.Client;
-import ru.pcs.graduatework.model.Portfolio;
-import ru.pcs.graduatework.model.Stock;
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.dto.StockDto;
+import ru.pcs.graduatework.entities.PortfolioEntity;
 
 public interface PortfolioService {
-    public Boolean addStocks(Client client, Stock stock, Integer stocksCount);
+    public Boolean addStocks(ClientDto clientDto, StockDto stockDto, Integer stocksCount);
 
     Integer searchPortfolioIdByClientIdAndTicker(Integer clientId, String ticker);
 
-    Portfolio getByID(Integer portfolioId);
+    PortfolioEntity getByID(Integer portfolioId);
 
-    Boolean subtractStocks(Client client, Stock stock, Portfolio portfolio, Integer stocksCount);
+    Boolean subtractStocks(ClientDto clientDto, StockDto stockDto, PortfolioEntity portfolioEntity, Integer stocksCount);
 }

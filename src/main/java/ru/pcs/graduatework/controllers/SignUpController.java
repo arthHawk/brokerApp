@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.dto.ClientPortfolioDto;
 import ru.pcs.graduatework.forms.ClientForm;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Client;
 import ru.pcs.graduatework.service.ClientsService;
 import ru.pcs.graduatework.service.StocksService;
 
@@ -47,9 +47,9 @@ public class SignUpController {
             return "signUp";
         }
         clientsService.addClient(form);
-        Client client = clientsService.searchClientByLogin(form.getLogin());
-        List<PortfolioForm> portfolio = stocksService.getPortfolioInformation(client.getId());
-        model.addAttribute("client", client);
+        ClientDto clientDto = clientsService.searchClientByLogin(form.getLogin());
+        List<ClientPortfolioDto> portfolio = stocksService.getPortfolioInformation(clientDto.getId());
+        model.addAttribute("client", clientDto);
         model.addAttribute("portfolio", portfolio);
         return "personal-portfolioPage-stocksZero";
     }

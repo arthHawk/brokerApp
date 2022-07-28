@@ -22,16 +22,16 @@
             <td>${client.surname}</td>
             <td>${client.name}</td>
             <td>
-                <form method="post" action="/adminClients/${client.id}/adminDelete">
+                <form method="post" action="/admin-clients/${client.id}/admin-delete">
                     <input type="submit" value="Удалить">
                 </form>
-                <a href="/adminClients/${client.id}">Перейти</a>
+                <a href="/admin-clients/${client.id}">Перейти</a>
             </td>
         </tr>
     </#list>
 </table>
 
-<form method="post" action="/adminAddClient">
+<form method="post" action="/admin-add-client">
     <label>Введите логин для авторизации на сайте:
         <input name="login" placeholder="Введите логин: ">
     </label>

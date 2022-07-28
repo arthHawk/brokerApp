@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pcs.graduatework.forms.PortfolioForm;
-import ru.pcs.graduatework.model.Client;
-import ru.pcs.graduatework.model.Portfolio;
-import ru.pcs.graduatework.model.Stock;
+import ru.pcs.graduatework.dto.ClientDto;
+import ru.pcs.graduatework.dto.ClientPortfolioDto;
+import ru.pcs.graduatework.dto.StockDto;
 import ru.pcs.graduatework.service.ClientsService;
 import ru.pcs.graduatework.service.PortfolioService;
 import ru.pcs.graduatework.service.StocksService;
@@ -25,10 +24,10 @@ public class BuyStocksController {
 
     @GetMapping
     public String buyStocksPage(Model model, @PathVariable("client-id") Integer clientId) {
-        Client client = clientsService.getClient(clientId);
-        List<Stock> stocks = stocksService.getAllStocks();
-        model.addAttribute("client", client);
-        model.addAttribute("stocks", stocks);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        List<StockDto> stockDto = stocksService.getAllStocks();
+        model.addAttribute("client", clientDto);
+        model.addAttribute("stocks", stockDto);
         return "personal-buy-stocks";
     }
 
@@ -36,10 +35,10 @@ public class BuyStocksController {
     public String buyStocksPageCount(Model model,
                                      @PathVariable("client-id") Integer clientId,
                                      @PathVariable("stock-id") Integer stockId) {
-        Client client = clientsService.getClient(clientId);
-        Stock stock = stocksService.getStock(stockId);
-        model.addAttribute("client", client);
-        model.addAttribute("stock", stock);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        StockDto stockDto = stocksService.getStock(stockId);
+        model.addAttribute("client", clientDto);
+        model.addAttribute("stock", stockDto);
         return "personal-buy-stocks-count";
     }
 
@@ -48,16 +47,16 @@ public class BuyStocksController {
                            @PathVariable("client-id") Integer clientId,
                            @PathVariable("stock-id") Integer stockId,
                            @RequestParam("stocksCount") Integer stocksCount) {
-        Client client = clientsService.getClient(clientId);
-        Stock stock = stocksService.getStock(stockId);
-        if (portfolioService.addStocks(client, stock, stocksCount)) {
-            List<PortfolioForm> portfolio = stocksService.getPortfolioInformation(client.getId());
-            model.addAttribute("client", client);
+        ClientDto clientDto = clientsService.getClient(clientId);
+        StockDto stockDto = stocksService.getStock(stockId);
+        if (portfolioService.addStocks(clientDto, stockDto, stocksCount)) {
+            List<ClientPortfolioDto> portfolio = stocksService.getPortfolioInformation(clientDto.getId());
+            model.addAttribute("client", clientDto);
             model.addAttribute("portfolio", portfolio);
             return "personal-portfolioPage";
         } else {
-            model.addAttribute("client", client);
-            model.addAttribute("stock", stock);
+            model.addAttribute("client", clientDto);
+            model.addAttribute("stock", stockDto);
             return "personal-buy-stocks-count-notEnoughCash";
         }
     }

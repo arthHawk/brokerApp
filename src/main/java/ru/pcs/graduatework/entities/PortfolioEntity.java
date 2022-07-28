@@ -1,19 +1,15 @@
-package ru.pcs.graduatework.model;
+package ru.pcs.graduatework.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
+@Setter
 @Entity
 @Table(name = "portfolios")
-public class Portfolio {
+public class PortfolioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,9 +17,9 @@ public class Portfolio {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private ClientEntity clientEntity;
 
     @ManyToOne
     @JoinColumn(name = "stock_id")
-    private Stock stock;
+    private StockEntity stockEntity;
 }

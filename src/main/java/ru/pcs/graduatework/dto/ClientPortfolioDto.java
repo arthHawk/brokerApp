@@ -1,4 +1,4 @@
-package ru.pcs.graduatework.forms;
+package ru.pcs.graduatework.dto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class PortfolioForm {
+public class ClientPortfolioDto {
     private Integer clientId;
     private String issuer;
     private String ticker;
